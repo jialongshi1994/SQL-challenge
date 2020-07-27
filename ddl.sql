@@ -1,19 +1,19 @@
 CREATE SCHEMA "employee" ;
-create table if not exists  employee.departments
+CREATE TABLE IF NOT EXISTS  employee.departments
 (
-    dept_no   varchar(20) not null constraint departments_pkey primary key,
+    dept_no   varchar(20) NOT null constraint departments_pkey PRIMARY KEY,
     dept_name varchar(255)
 );
 
-create table if not exists  employee.titles
+CREATE TABLE IF NOT EXISTS  employee.titles
 (
-    title_id varchar(20) not null constraint titles_pkey primary key,
+    title_id varchar(20) NOT null constraint titles_pkey PRIMARY KEY,
     title    varchar(255)
 );
 
-create table if not exists  employee.employees
+CREATE TABLE IF NOT EXISTS  employee.employees
 (
-    emp_no       varchar(20)  not null constraint employees_pkey primary key,
+    emp_no       varchar(20)  NOT null constraint employees_pkey PRIMARY KEY,
     emp_title_id varchar(255),
     birth_date   varchar(20),
     first_name   varchar(255),
@@ -21,33 +21,33 @@ create table if not exists  employee.employees
     sex          varchar(10),
     hire_date    date
 );     
-alter table employee.employees add constraint employees_titles_fk foreign key (emp_title_id) references employee.titles (title_id);
+ALTER TABLE employee.employees ADD CONSTRAINT employees_titles_fk FOREIGN KEY (emp_title_id) REFERENCES employee.titles (title_id);
 
--- add FK
-create table if not exists  employee.salaries
+/* add FK*/
+CREATE TABLE IF NOT EXISTS  employee.salaries
 (
     emp_no varchar(20),
     salary float8
 );
-alter table employee.salaries add constraint salaries_employees_fk foreign key (emp_no) references employee.employees (emp_no);
+ALTER TABLE employee.salaries ADD CONSTRAINT salaries_employees_fk FOREIGN KEY (emp_no) REFERENCES employee.employees (emp_no);
 
 
-create table if not exists  employee.dept_emp
+CREATE TABLE IF NOT EXISTS  employee.dept_emp
 (
     emp_no  varchar(20),
     dept_no varchar(20)
 );
--- add FK
-alter table employee.dept_emp add constraint dept_emp_departments_dept_no_fk foreign key (dept_no) references employee.departments (dept_no);
-alter table employee.dept_emp add constraint dept_emp_employees_emp_no_fk foreign key (emp_no) references employee.employees (emp_no) ;
+/* add FK*/
+ALTER TABLE employee.dept_emp ADD CONSTRAINT dept_emp_departments_dept_no_fk FOREIGN KEY (dept_no) REFERENCES employee.departments (dept_no);
+ALTER TABLE employee.dept_emp ADD CONSTRAINT dept_emp_employees_emp_no_fk FOREIGN KEY (emp_no) REFERENCES employee.employees (emp_no) ;
 
-create table if not exists  employee.dept_manager
+CREATE TABLE IF NOT EXISTS  employee.dept_manager
 (
     dept_no varchar(20),
     emp_no  varchar(20)
 );
-alter table employee.dept_manager add constraint dept_manager_departments_dept_no_fk foreign key (dept_no) references employee.departments (dept_no);
-alter table employee.dept_manager add constraint dept_manager_employees_fk foreign key (emp_no) references employee.employees (emp_no);
+ALTER TABLE employee.dept_manager ADD CONSTRAINT dept_manager_departments_dept_no_fk FOREIGN KEY (dept_no) REFERENCES employee.departments (dept_no);
+ALTER TABLE employee.dept_manager ADD CONSTRAINT dept_manager_employees_fk FOREIGN KEY (emp_no) REFERENCES employee.employees (emp_no);
 
 
 
